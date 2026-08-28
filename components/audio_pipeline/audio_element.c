@@ -580,8 +580,15 @@ esp_err_t audio_element_set_uri(audio_element_handle_t el, const char *uri)
 
 char *audio_element_get_uri(audio_element_handle_t el)
 {
-    mutex_lock(el->lock);
     char *uri = el->info.uri;
+    return uri;
+}
+
+char *audio_element_get_uri_dupe(audio_element_handle_t el)
+{
+	if (NULL == el->info.uri) return NULL;
+    mutex_lock(el->lock);
+    char *uri = strdup(el->info.uri);
     mutex_unlock(el->lock);
     return uri;
 }

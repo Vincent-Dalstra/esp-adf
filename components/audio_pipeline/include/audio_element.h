@@ -291,13 +291,28 @@ esp_err_t audio_element_getinfo(audio_element_handle_t el, audio_element_info_t 
 esp_err_t audio_element_set_uri(audio_element_handle_t el, const char *uri);
 
 /**
- * @brief      Get audio element URI.
+ * @brief      Get audio element URI. Not thread-safe
+ *
+ * @note Use \c audio_element_get_uri_dupe() if thread-safety is required.
  *
  * @param[in]  el    The audio element handle
  *
  * @return     URI pointer
  */
 char *audio_element_get_uri(audio_element_handle_t el);
+
+
+/**
+ * @brief      Copy audio element URI. Thread-safe.
+ *
+ *	Caller owns the memory, and must call \c free() when they are done.
+ *
+ * @param[in]  el    The audio element handle
+ *
+ * @return     URI pointer
+ */
+char *audio_element_get_uri_dupe(audio_element_handle_t el);
+
 
 /**
  * @brief      Start Audio Element.
